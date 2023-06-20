@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/public/css/style.css" rel="stylesheet">
+</head>
+
+<body class="<%- locals.user ? user.backgroundColor : null %>">
+    <header>
+        <ul class="nav">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/welcome">Bienvenid@</a>
+            </li>
+            <li>
+                <form action="/logout" method="post" class="form-header">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </header>
+    <main class="container">
+        <form action="/" method="post" class="form">
+            <% if (!session.user || !session.user.name) { %>
+                <label for="name">Ingrese su nombre:
+                    <input type="text" name="name" value="<%= session.old && session.old.name %>">
+                    <p class="error">
+                        <%= session.errors && session.errors.name ? session.errors.name.msg : null %>
+                    </p>
+                </label>
+                <select name="color" id="color">
+                    <option value="" hidden>Elija su color favorito</option>
+                    <% colors.forEach(color=> { %>
+                        <option value="<%= color %>" <%=session.old && color===session.old.color ? "selected" : null %>>
+                            <%= color %>
+                        </option>
+                        <% }) %>
+                </select>
+                <p class="error">
+                    <%= session.errors && session.errors.color ? session.errors.color.msg : null %>
+                </p>
+                <label for="email">Ingrese su email:
+                    <input type="email" name="email" id="email" value="<%= session.old && session.old.email %>">
+                    <p class="error">
+                        <%= session.errors && session.errors.email ? session.errors.email.msg : null %>
+                    </p>
+                </label>
+                <label for="age">Ingrese su edad:
+                    <input type="number" name="age" id="age" value="<%= session.old && session.old.age %>">
+                    <p class="error">
+                        <%= session.errors && session.errors.age ? session.errors.age.msg : null %>
+                    </p>
+                </label>
+                <label for="checkbox">Recordar Color
+                    <input type="checkbox" name="checkbox" id="checkbox" <%=session.old && session.old.checkbox
+                        ? "checked" : null %>>
+                </label>
+                <button type="submit">Enviar</button>
+
+        </form>
+        <% } else { %>
+            
+            <p>Hola <%= session.user.name %>,</p>
+            <p>Elegiste el color: <%= session.user.color %>,</p>
+            <p>Tu email es: <%= session.user.email %>
+            </p>
+            <p>Tu edad es: <%= session.user.age %>.</p>
+            <p class="boton"><a href="/welcome">Ir a la página de bienvenida</a></p>
+            <% } %>
+    </main>
+</body>
+
+</html>

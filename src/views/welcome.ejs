@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="/public/css/style.css" rel="stylesheet">
+    </head>
+    <body class="<%= session.user && session.user.color ? session.user.color : 'pink' %>">
+    <header>
+        <ul class="nav">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/welcome">Bienvenid@</a>
+            </li>
+            <li>
+                <form action="/logout" method="post" class="form-header">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </header>
+
+    <main>
+        <div class="<%= session.user.color %>">
+            <p class="centro"><%= `${session.user.name}, gracias por visitarnos!` %></p>
+
+            <p>Tu color favorito es: <%= session.user.color %></p>
+        </div>
+    </main>
+</body>
+</html>
